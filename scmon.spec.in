@@ -1,0 +1,67 @@
+Summary: Makes waiting for smart card events easy
+Name: scmon
+Version: @PACKAGE_VERSION@
+Release: 1
+License: GPL
+Group: System/Daemons
+URL: http://code.google.com/p/scmon/
+Source0: http://scmon.googlecode.com/files/%{name}-%{version}.tar.gz
+BuildRoot: %{_tmppath}/%{name}-%{version}-%{release}-root
+
+BuildRequires: pkgconfig  
+
+%if 0%{?sles_version} == 10
+BuildRequires: distribution-release dbus-1-devel mozilla-nspr-devel mozilla-nss-devel 
+%endif
+
+%if 0%{?suse_version} == 1020
+BuildRequires: distribution-release dbus-1-devel dbus-1-glib-devel mozilla-nspr-devel mozilla-nss-devel 
+%endif
+
+%if 0%{?fedora_version} == 6
+BuildRequires: fedora-release dbus-devel dbus-glib-devel nss-devel nspr-devel
+%endif
+
+%description
+SCMon monitors smart cards, configured in a system-wide nss database,
+and broadcasts their insertion/removal over d-bus. It also supports a
+few simple queries.
+
+It is intended to make it easy for applications such as screensavers
+and login managers to support smart card events.
+
+%debug_package
+
+%prep
+%setup -q
+
+%build
+%configure
+make
+
+%install
+rm -rf $RPM_BUILD_ROOT
+%makeinstall
+
+%clean
+rm -rf $RPM_BUILD_ROOT
+
+%post
+%{fillup_and_insserv scmon}
+
+%postun
+%{insserv_cleanup}
+
+%files
+%defattr(-,root,root,-)
+%doc
+%config %{_sysconfdir}/dbus-1/system.d/com.novell.Pkcs11Monitor.conf
+%{_sysconfdir}/init.d/scmon
+%{_datadir}/dbus-1/services/com.novell.Pkcs11Monitor.service
+%{_sbindir}/scmon
+%{_bindir}/scmon-client
+
+%changelog
+* Fri Feb 16 2007 jacob berkman <jberkman@novell.com> - 
+- Initial build.
+

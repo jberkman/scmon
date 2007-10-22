@@ -1,0 +1,63 @@
+#! /bin/sh
+#
+# Author: 
+#
+#
+### BEGIN INIT INFO
+# Provides:       scmon
+# Required-Start:  pcscd dbus
+# X-UnitedLinux-Should-Start: pcscd dbus
+# Required-Stop:   
+# Default-Start:   2 3 5
+# Default-Stop:    0 1 6 
+# Description:     Smart Card Monitor
+### END INIT INFO
+
+
+scmon_BIN=/usr/sbin/scmon
+test -x $scmon_BIN || exit 5
+
+. /etc/rc.status
+rc_reset
+
+case "$1" in
+    start)
+        echo -n "Starting Smart Card Monitor "
+	rm -f /var/run/scmon.pid
+	startproc $scmon_BIN
+        rc_status -v
+	;;
+    stop)
+        echo -n "Stopping Smart Card Monitor "
+        killproc -TERM $scmon_BIN
+	rc_status -v
+        ;;
+    try-restart)
+        $0 status >/dev/null &&  $0 restart
+        rc_status
+        ;;
+    restart)
+        $0 stop
+        $0 start
+        rc_status
+        ;;
+    force-reload)
+        $0 stop  &&  $0 start
+        rc_status
+        ;;
+    reload)
+        echo -n "Reload Smart Card Monitor "
+        rc_failed 3
+        rc_status -v
+        ;;
+    status)
+        echo -n "Checking for Smart Card Monitor "
+	checkproc $scmon_BIN 
+	rc_status -v
+	;;
+    *)
+        echo "Usage: $0 {start|stop|try-restart|restart|force-reload|reload|status}"
+        exit 1
+        ;;
+esac
+rc_exit

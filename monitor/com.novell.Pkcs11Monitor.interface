@@ -1,0 +1,35 @@
+<!DOCTYPE node PUBLIC 
+    "-//freedesktop//DTD D-BUS Object Introspection 1.0//EN"
+    "http://www.freedesktop.org/standards/dbus/1.0/introspect.dtd">
+<node name="/com/novell/Pkcs11Monitor">
+  <interface name="com.novell.Pkcs11Monitor">
+    <annotation name="org.freedesktop.DBus.GLib.CSymbol" value="sc_dbus_pk11_monitor"/>
+
+    <method name="IsTokenInserted">
+      <arg type="s" name="tokenName" direction="in" />
+      <arg type="b" name="isInserted" direction="out">
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="" />
+      </arg>
+    </method>
+
+    <method name="GetInsertedTokens">
+      <arg type="as" name="insertedTokens" direction="out">
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="" />
+      </arg>
+    </method>
+
+    <method name="AreTokensInserted">
+      <arg type="b" name="areInserted" direction="out">
+        <annotation name="org.freedesktop.DBus.GLib.ReturnVal" value="" />
+      </arg>
+    </method>
+
+    <signal name="SecurityTokenInserted">
+      <arg name="tokenName" type="s" />
+    </signal>
+    <signal name="SecurityTokenRemoved">
+      <arg name="tokenName" type="s" />
+    </signal>
+
+  </interface>
+</node>

@@ -1,0 +1,3 @@
+[D-Bus Service]
+Name=com.novell.Pkcs11Monitor
+Exec=@EXPANDED_SBINDIR@/scmon -f

@@ -1,0 +1,7 @@
+.deps
+.dirstamp
+Makefile
+Makefile.in
+com.novell.Pkcs11Monitor-server.h
+com.novell.Pkcs11Monitor.service
+
