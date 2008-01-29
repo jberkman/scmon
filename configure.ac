@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.59)
-AC_INIT([scmon], [0.3], [http://code.google.com/p/scmon/issues/list])
+AC_INIT([scmon], [0.4], [http://code.google.com/p/scmon/issues/list])
 AM_INIT_AUTOMAKE([foreign])
 AC_CONFIG_SRCDIR([monitor/scmon.c])
 AC_CONFIG_HEADER([config.h])
