@@ -78,7 +78,7 @@ write_a_string (int fd, const gchar *s)
     
     len = strlen (s);
     if (len == 0) {
-        return;
+        return TRUE;
     }
     
     written = 0;
